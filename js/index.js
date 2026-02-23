@@ -8,9 +8,14 @@ let jobs=[
     {id:7, companyName:"StartupXYZ", position:"Full Stack Engineer", location:"Remote" ,type:"Full-time", salary:"$120,000 - $160,000", description:"Join our fast-growing startup and work on our core platform. Experience with Node.js and React required. Great benefits and equity package included.", rejected:false, interview:false, applied:false},
     {id:8, companyName:"TechCorp Industries", position:"Senior Frontend Developer", location:"San Francisco, CA" ,type:"Full-time", salary:"$130,000 - $175,000", description:"We are looking for an experienced Frontend Developer to build scalable web applications using React and TypeScript. You will work with a talented team on cutting-edge projects.", rejected:false, interview:false, applied:false},
 ];
+let interviewCards=[];
+let rejectedCards=[];
+
+console.log(jobs);
 
 for(x of jobs)
 {
+    
     let cards=`    <div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 ">
         <div class="card-heading flex items-center justify-between ">
             <div class="left">
@@ -48,6 +53,5 @@ for(x of jobs)
     document.getElementById("jobContainer").innerHTML+=cards;
 }
 
-let interviewCards=[];
-let rejectedCards=[];
+
 

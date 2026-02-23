@@ -1,3 +1,4 @@
+
 function getValue(id)
 {
     return document.getElementById(id).value;
@@ -15,19 +16,13 @@ function setInnerText(id, value)
     document.getElementById(id).innerText = value;
 }
 
-function interviewJob(id)
-{   
-    if(interviewCards.find(x=>x.id===id))
-    {
-        console.log("Job already in interview list");
-        return;
-    }
-    interviewCards.push(jobs.find(x=>x.id===id));
-    setInnerText("interviewCount", interviewCards.length);
-    console.log(interviewCards);
-    for(x of interviewCards)
-    {
-        let InCards=`    <div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 ">
+
+function renderInterviewJobs(){
+    let container = document.getElementById("interviewContainer");
+    container.innerHTML = "";
+
+    for(let x of interviewCards){
+        container.innerHTML += `<div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 ">
             <div class="card-heading flex items-center justify-between ">
                 <div class="left">
                     <h3 class="font-semibold text-[18px]">${x.companyName}</h3>
@@ -59,24 +54,15 @@ function interviewJob(id)
                 <button class="btn btn-outline btn-error p-3 mt-5 ml-2" onclick="rejectJob(${x.id})">REJECTED</button>
             </div>
         </div>`;
-        document.getElementById("interviewContainer").innerHTML+=InCards;
     }
-    
 }
 
-function rejectJob(id)
-{   
-    if(interviewCards.find(x=>x.id===id))
-    {
-        console.log("Job already in rejectJob list");
-        return;
-    }
-    rejectedCards.push(jobs.find(x=>x.id===id));
-    setInnerText("rejectedCount", rejectedCards.length);
-    console.log(rejectedCards);
-    for(x of rejectedCards)
-    {
-        let rejCards=`    <div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 ">
+function renderRejectedJobs(){
+    let container = document.getElementById("rejectedContainer");
+    container.innerHTML = "";
+
+    for(let x of rejectedCards){
+        container.innerHTML += `    <div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 ">
             <div class="card-heading flex items-center justify-between ">
                 <div class="left">
                     <h3 class="font-semibold text-[18px]">${x.companyName}</h3>
@@ -108,7 +94,16 @@ function rejectJob(id)
                 <button class="btn btn-outline btn-error p-3 mt-5 ml-2" onclick="rejectJob(${x.id})">REJECTED</button>
             </div>
         </div>`;
-        document.getElementById("rejectedContainer").innerHTML+=rejCards;
     }
-    
+}
+
+
+
+function allJobs(id)
+{
+   document.getElementById("jobContainer").classList.add("hidden");
+    document.getElementById("rejectedContainer").classList.add("hidden");
+    document.getElementById("interviewContainer").classList.add("hidden");
+
+   document.getElementById(id).classList.remove("hidden");
 }
