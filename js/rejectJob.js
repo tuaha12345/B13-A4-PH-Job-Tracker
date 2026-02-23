@@ -1,14 +1,5 @@
 function rejectJob(id)
 {   
-//    if(rejectedCards.length===0)
-//     {
-//         document.getElementById("rejectedContainer").classList.add("hidden");
-//         document.getElementById("emptyCard").classList.remove("hidden");
-//     } 
-    // else{
-    //     document.getElementById("rejectedContainer").classList.remove("hidden");
-    //     document.getElementById("emptyCard").classList.add("hidden");
-    // }
     if(rejectedCards.find(x=>x.id===id))
     {
         console.log("Job already in rejectJob list");
@@ -29,5 +20,6 @@ function rejectJob(id)
         renderAllJobs();
         renderInterviewJobs();
         renderRejectedJobs();
+        updateAllUI();
     
 }

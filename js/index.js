@@ -43,7 +43,7 @@ for(let x of jobs)
             </div>
             <div class="right">
                <button class="border border-[#F1F2F4] rounded-full w-8 h-8 flex items-center justify-center">
-                <i class="fa-regular fa-trash-can text-[#64748B]" onclick="deleteJob(${x.id})"></i>
+                <i class="fa-regular fa-trash-can text-[#64748B] cursor-pointer" onclick="deleteJob(${x.id})"></i>
                </button>
             </div>
         </div>

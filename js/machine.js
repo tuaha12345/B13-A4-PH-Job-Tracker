@@ -30,7 +30,7 @@ function renderInterviewJobs(){
                 </div>
                 <div class="right">
                 <button class="border border-[#F1F2F4] rounded-full w-8 h-8 flex items-center justify-center">
-                    <i class="fa-regular fa-trash-can text-[#64748B]" onclick="deleteJob(${x.id})"></i>
+                    <i class="fa-regular fa-trash-can text-[#64748B] cursor-pointer" onclick="deleteJob(${x.id})"></i>
                 </button>
                 </div>
             </div>
@@ -70,7 +70,7 @@ function renderRejectedJobs(){
                 </div>
                 <div class="right">
                 <button class="border border-[#F1F2F4] rounded-full w-8 h-8 flex items-center justify-center">
-                    <i class="fa-regular fa-trash-can text-[#64748B]" onClick="deleteJob(${x.id})"></i>
+                    <i class="fa-regular fa-trash-can text-[#64748B] cursor-pointer" onClick="deleteJob(${x.id})"></i>
                 </button>
                 </div>
             </div>
@@ -121,7 +121,7 @@ function renderAllJobs(){
                                 </div>
                                 <div class="right">
                                 <button class="border border-[#F1F2F4] rounded-full w-8 h-8 flex items-center justify-center">
-                                    <i class="fa-regular fa-trash-can text-[#64748B]" onClick="deleteJob(${x.id})"></i>
+                                    <i class="fa-regular fa-trash-can text-[#64748B] cursor-pointer" onClick="deleteJob(${x.id})"></i>
                                 </button>
                                 </div>
                             </div>
@@ -154,8 +154,25 @@ function allJobs(id)
    document.getElementById("jobContainer").classList.add("hidden");
     document.getElementById("rejectedContainer").classList.add("hidden");
     document.getElementById("interviewContainer").classList.add("hidden");
+    document.getElementById("emptyCard").classList.add("hidden");
 
    document.getElementById(id).classList.remove("hidden");
+   if(id==="jobContainer")
+   {
+    document.getElementById("filterCount").classList.add("hidden");
+    showEmptyOrData("jobContainer", jobs);
+   }
+   else if(id==="interviewContainer" || id==="rejectedContainer")
+   {
+
+    document.getElementById("filterCount").classList.remove("hidden");
+    setInnerText("filterNumber", id==="interviewContainer"? interviewCards.length : rejectedCards.length);
+    renderInterviewJobs();
+    renderRejectedJobs();
+    showEmptyOrData("interviewContainer", interviewCards); 
+   }
+
+   
 }
 
 function updateStatus(id,status)
@@ -171,7 +188,8 @@ function updateStatus(id,status)
 }
 
 function deleteJob(id)
-{
+{ 
+    
     jobs = jobs.filter(x=>x.id!==id);
     interviewCards = interviewCards.filter(x=>x.id!==id);
     rejectedCards = rejectedCards.filter(x=>x.id!==id);
@@ -179,23 +197,29 @@ function deleteJob(id)
     setInnerText("rejectedCount", rejectedCards.length);
     setInnerText("totalCount", jobs.length);
     setInnerText("jobNumber", jobs.length);
-    if(jobs.length===0)
-    {
-        // document.getElementById("jobContainer").classList.add("hidden");
-        // document.getElementById("emptyCard").classList.remove("hidden");
-    }
-    if(interviewCards.length===0)
-    {
-        document.getElementById("interviewContainer").classList.add("hidden");
-        document.getElementById("emptyCard").classList.remove("hidden");
-    }
-    if(rejectedCards.length===0)
+    // if(jobs.length===0)
+    // {
+    //     document.getElementById("jobContainer").classList.add("hidden");
+    //     document.getElementById("interviewContainer").classList.add("hidden");
+    //     document.getElementById("rejectedContainer").classList.add("hidden");
+    //     document.getElementById("emptyCard").classList.remove("hidden");
+    //     return;
+    // }
+        
+    
+    // if(interviewCards.length===0)
+    // {
+    //     document.getElementById("interviewContainer").classList.add("hidden");
+    //     document.getElementById("jonContainer").classList.remove("hidden");
+    //     // document.getElementById("emptyCard").classList.remove("hidden");
+    // }
+    // if(rejectedCards.length===0)
 
-
-    {
-        document.getElementById("rejectedContainer").classList.add("hidden");
-        document.getElementById("emptyCard").classList.remove("hidden");
-    }
+        
+    // {
+    //     document.getElementById("rejectedContainer").classList.add("hidden");
+    //     document.getElementById("emptyCard").classList.remove("hidden");
+    // }
 
 
     
@@ -203,5 +227,41 @@ function deleteJob(id)
     renderAllJobs();
     renderInterviewJobs();
     renderRejectedJobs();
+    updateAllUI();
+}
+
+function updateAllUI(){
+    setInnerText("totalCount", jobs.length);
+    setInnerText("interviewCount", interviewCards.length);
+    setInnerText("rejectedCount", rejectedCards.length);
+    setInnerText("jobNumber", jobs.length);
+
+    const interviewVisible = !document.getElementById("interviewContainer").classList.contains("hidden");
+    const rejectedVisible = !document.getElementById("rejectedContainer").classList.contains("hidden");
+    
+
+    if (interviewVisible) {
+        setInnerText("filterNumber", interviewCards.length);
+    } else if (rejectedVisible) {
+        setInnerText("filterNumber", rejectedCards.length);
+    }
+
+    
+}
+
+function showEmptyOrData(id,daraArray)
+{
+    const container = document.getElementById(id);
+    const emptyCard = document.getElementById("emptyCard");
+    if(daraArray.length===0)
+    {
+        container.classList.add("hidden");
+        emptyCard.classList.remove("hidden");
+    }
+    else
+    {
+        container.classList.remove("hidden");
+        emptyCard.classList.add("hidden");
+    }
 }
 
