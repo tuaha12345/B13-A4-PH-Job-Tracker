@@ -12,6 +12,14 @@ let interviewCards=[];
 let rejectedCards=[];
 
 console.log(jobs);
+if(jobs.length===0)
+{
+         document.getElementById("jobContainer").classList.add("hidden");
+        document.getElementById("emptyCard").classList.remove("hidden");
+}
+else{
+         document.getElementById("jobContainer").classList.remove("hidden");
+        document.getElementById("emptyCard").classList.add("hidden");
 
 for(let x of jobs)
 {
@@ -64,3 +72,4 @@ for(let x of jobs)
 
 
 
+}

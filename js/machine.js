@@ -180,8 +180,28 @@ function deleteJob(id)
     setInnerText("totalCount", jobs.length);
     setInnerText("jobNumber", jobs.length);
     if(jobs.length===0)
+    {
+        // document.getElementById("jobContainer").classList.add("hidden");
+        // document.getElementById("emptyCard").classList.remove("hidden");
+    }
+    if(interviewCards.length===0)
+    {
+        document.getElementById("interviewContainer").classList.add("hidden");
+        document.getElementById("emptyCard").classList.remove("hidden");
+    }
+    if(rejectedCards.length===0)
+
+
+    {
+        document.getElementById("rejectedContainer").classList.add("hidden");
+        document.getElementById("emptyCard").classList.remove("hidden");
+    }
+
+
+    
 
     renderAllJobs();
     renderInterviewJobs();
     renderRejectedJobs();
 }
+
