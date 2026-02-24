@@ -16,10 +16,11 @@ function interviewJob(id)
     setInnerText("interviewCount", interviewCards.length);
     console.log(interviewCards);
 
-    
+ 
         renderAllJobs();
         renderInterviewJobs();
         renderRejectedJobs();
         updateAllUI();
+        
     
 }

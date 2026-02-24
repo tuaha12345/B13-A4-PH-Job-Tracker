@@ -228,6 +228,7 @@ function deleteJob(id)
     renderInterviewJobs();
     renderRejectedJobs();
     updateAllUI();
+
 }
 
 function updateAllUI(){

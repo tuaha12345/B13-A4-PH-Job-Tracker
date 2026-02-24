@@ -11,15 +11,21 @@ function rejectJob(id)
         setInnerText("interviewCount", interviewCards.length);
         
     }
-    rejectedCards.push(jobs.find(x=>x.id===id));
-    updateStatus(id, "rejected");
-    setInnerText("rejectedCount", rejectedCards.length);
-    console.log(rejectedCards);
+    
+    else{
+            rejectedCards.push(jobs.find(x=>x.id===id));
+            updateStatus(id, "rejected");
+            setInnerText("rejectedCount", rejectedCards.length);
+            console.log(rejectedCards);
 
-        
+
         renderAllJobs();
         renderInterviewJobs();
         renderRejectedJobs();
         updateAllUI();
+
+    }
+
+       
     
 }
