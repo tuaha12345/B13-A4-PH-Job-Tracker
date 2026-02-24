@@ -15,12 +15,13 @@ function interviewJob(id)
     updateStatus(id, "interview");
     setInnerText("interviewCount", interviewCards.length);
     console.log(interviewCards);
+    console.log('rejectedCards.length', rejectedCards.length);
 
- 
+    
         renderAllJobs();
         renderInterviewJobs();
         renderRejectedJobs();
-        updateAllUI();
-        
     
+        updateEmptyCard();
+        updateJobNumber(rejectedCards.length);
 }

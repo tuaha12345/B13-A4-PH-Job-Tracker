@@ -1,5 +1,6 @@
 function rejectJob(id)
 {   
+
     if(rejectedCards.find(x=>x.id===id))
     {
         console.log("Job already in rejectJob list");
@@ -11,21 +12,20 @@ function rejectJob(id)
         setInnerText("interviewCount", interviewCards.length);
         
     }
+    rejectedCards.push(jobs.find(x=>x.id===id));
+    updateStatus(id, "rejected");
+    setInnerText("rejectedCount", rejectedCards.length);
+    console.log(rejectedCards);
     
-    else{
-            rejectedCards.push(jobs.find(x=>x.id===id));
-            updateStatus(id, "rejected");
-            setInnerText("rejectedCount", rejectedCards.length);
-            console.log(rejectedCards);
+    console.log('interviewCards.length', interviewCards.length);
 
 
+        
         renderAllJobs();
         renderInterviewJobs();
         renderRejectedJobs();
-        updateAllUI();
-
-    }
-
-       
     
+
+        updateEmptyCard();
+        updateJobNumber(interviewCards.length);
 }
