@@ -22,7 +22,7 @@ function renderInterviewJobs(){
     container.innerHTML = "";
 
     for(let x of interviewCards){
-        container.innerHTML += `<div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 ">
+        container.innerHTML += `<div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 border-l-4" style="border-left-color:#DCFCE7">
             <div class="card-heading flex items-center justify-between ">
                 <div class="left">
                     <h3 class="font-semibold text-[18px]">${x.companyName}</h3>
@@ -30,7 +30,7 @@ function renderInterviewJobs(){
                 </div>
                 <div class="right">
                 <button class="border border-[#F1F2F4] rounded-full w-8 h-8 flex items-center justify-center">
-                    <i class="fa-regular fa-trash-can text-[#64748B] cursor-pointer" onclick="deleteJob(${x.id})"></i>
+                    <i class="fa-regular fa-trash-can text-[#64748B]" onclick="deleteJob(${x.id})"></i>
                 </button>
                 </div>
             </div>
@@ -62,7 +62,7 @@ function renderRejectedJobs(){
     container.innerHTML = "";
 
     for(let x of rejectedCards){
-        container.innerHTML += `    <div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 ">
+        container.innerHTML += `    <div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 border-l-4 " style="border-left-color:#FEE2E2">
             <div class="card-heading flex items-center justify-between ">
                 <div class="left">
                     <h3 class="font-semibold text-[18px]">${x.companyName}</h3>
@@ -70,7 +70,7 @@ function renderRejectedJobs(){
                 </div>
                 <div class="right">
                 <button class="border border-[#F1F2F4] rounded-full w-8 h-8 flex items-center justify-center">
-                    <i class="fa-regular fa-trash-can text-[#64748B] cursor-pointer" onClick="deleteJob(${x.id})"></i>
+                    <i class="fa-regular fa-trash-can text-[#64748B]" onClick="deleteJob(${x.id})"></i>
                 </button>
                 </div>
             </div>
@@ -101,19 +101,24 @@ function renderAllJobs(){
     let container = document.getElementById("jobContainer");
     container.innerHTML = "";
     for(let x of jobs){
+            let color="#f7f8f8";
+            let status = "";
             if(x.jobStatus==="interview")
             {
                 status = `<button class="btn btn-success text-amber-50 p-3 mt-5">INTERVIEW</button>`;
+                color="#DCFCE7";
             }
             else if(x.jobStatus==="rejected")
             {
                 status = `<button class="btn btn-error text-amber-50 p-3 mt-5">REJECTED</button>`;
+                color="#FEE2E2";
             }
             else
             {
                 status = `<button class="btn btn-soft btn-info text-gray-700 p-3 mt-5">NOT APPLIED</button>`;
+                color="#f7f8f8";
             }
-            container.innerHTML +=`    <div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 ">
+            container.innerHTML +=`    <div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 border-l-4" style="border-left-color:${color}">
                             <div class="card-heading flex items-center justify-between ">
                                 <div class="left">
                                     <h3 class="font-semibold text-[18px]">${x.companyName}</h3>
@@ -121,7 +126,7 @@ function renderAllJobs(){
                                 </div>
                                 <div class="right">
                                 <button class="border border-[#F1F2F4] rounded-full w-8 h-8 flex items-center justify-center">
-                                    <i class="fa-regular fa-trash-can text-[#64748B] cursor-pointer" onClick="deleteJob(${x.id})"></i>
+                                    <i class="fa-regular fa-trash-can text-[#64748B]" onClick="deleteJob(${x.id})"></i>
                                 </button>
                                 </div>
                             </div>
@@ -154,25 +159,23 @@ function allJobs(id)
    document.getElementById("jobContainer").classList.add("hidden");
     document.getElementById("rejectedContainer").classList.add("hidden");
     document.getElementById("interviewContainer").classList.add("hidden");
-    document.getElementById("emptyCard").classList.add("hidden");
 
    document.getElementById(id).classList.remove("hidden");
-   if(id==="jobContainer")
-   {
-    document.getElementById("filterCount").classList.add("hidden");
-    showEmptyOrData("jobContainer", jobs);
-   }
-   else if(id==="interviewContainer" || id==="rejectedContainer")
-   {
 
+   if(id==="interviewContainer"){
+     document.getElementById("filterCount").classList.remove("hidden");
+     updateJobNumber(interviewCards.length);
+   }
+   else if(id==="rejectedContainer"){
     document.getElementById("filterCount").classList.remove("hidden");
-    setInnerText("filterNumber", id==="interviewContainer"? interviewCards.length : rejectedCards.length);
-    renderInterviewJobs();
-    renderRejectedJobs();
-    showEmptyOrData("interviewContainer", interviewCards); 
+     updateJobNumber(rejectedCards.length);
    }
-
+   else{
+    document.getElementById("filterCount").classList.add("hidden");
+   }
    
+   
+   emptyCard(id);
 }
 
 function updateStatus(id,status)
@@ -188,81 +191,89 @@ function updateStatus(id,status)
 }
 
 function deleteJob(id)
-{ 
-    
-    jobs = jobs.filter(x=>x.id!==id);
-    interviewCards = interviewCards.filter(x=>x.id!==id);
-    rejectedCards = rejectedCards.filter(x=>x.id!==id);
+{
+    jobs = jobs.filter(x => x.id !== id);
+    interviewCards = interviewCards.filter(x => x.id !== id);
+    rejectedCards = rejectedCards.filter(x => x.id !== id);
+
     setInnerText("interviewCount", interviewCards.length);
     setInnerText("rejectedCount", rejectedCards.length);
     setInnerText("totalCount", jobs.length);
     setInnerText("jobNumber", jobs.length);
-    // if(jobs.length===0)
-    // {
-    //     document.getElementById("jobContainer").classList.add("hidden");
-    //     document.getElementById("interviewContainer").classList.add("hidden");
-    //     document.getElementById("rejectedContainer").classList.add("hidden");
-    //     document.getElementById("emptyCard").classList.remove("hidden");
-    //     return;
-    // }
-        
-    
-    // if(interviewCards.length===0)
-    // {
-    //     document.getElementById("interviewContainer").classList.add("hidden");
-    //     document.getElementById("jonContainer").classList.remove("hidden");
-    //     // document.getElementById("emptyCard").classList.remove("hidden");
-    // }
-    // if(rejectedCards.length===0)
-
-        
-    // {
-    //     document.getElementById("rejectedContainer").classList.add("hidden");
-    //     document.getElementById("emptyCard").classList.remove("hidden");
-    // }
-
-
-    
 
     renderAllJobs();
     renderInterviewJobs();
     renderRejectedJobs();
-    updateAllUI();
 
-}
+    const jobContainer = document.getElementById("jobContainer");
+    const interviewContainer = document.getElementById("interviewContainer");
+    const rejectedContainer = document.getElementById("rejectedContainer");
+    const emptyCardEl = document.getElementById("emptyCard");
 
-function updateAllUI(){
-    setInnerText("totalCount", jobs.length);
-    setInnerText("interviewCount", interviewCards.length);
-    setInnerText("rejectedCount", rejectedCards.length);
-    setInnerText("jobNumber", jobs.length);
+    if(jobs.length === 0) jobContainer.classList.add("hidden");
+    if(interviewCards.length === 0) interviewContainer.classList.add("hidden");
+    if(rejectedCards.length === 0) rejectedContainer.classList.add("hidden");
 
-    const interviewVisible = !document.getElementById("interviewContainer").classList.contains("hidden");
-    const rejectedVisible = !document.getElementById("rejectedContainer").classList.contains("hidden");
-    
 
-    if (interviewVisible) {
-        setInnerText("filterNumber", interviewCards.length);
-    } else if (rejectedVisible) {
-        setInnerText("filterNumber", rejectedCards.length);
+
+
+
+    const visibleContainer = [jobContainer, interviewContainer, rejectedContainer].find(c => !c.classList.contains("hidden"));
+
+    if(!visibleContainer) {
+        emptyCardEl.classList.remove("hidden");
+    } else {
+        emptyCardEl.classList.add("hidden");
     }
 
+    updateEmptyCard();
     
+    if(visibleContainer === interviewContainer) {
+        updateJobNumber(interviewCards.length);
+    } else if(visibleContainer === rejectedContainer) {
+        updateJobNumber(rejectedCards.length);
+    }
 }
 
-function showEmptyOrData(id,daraArray)
+function emptyCard(id)
 {
-    const container = document.getElementById(id);
-    const emptyCard = document.getElementById("emptyCard");
-    if(daraArray.length===0)
+    // document.getElementById(id).classList.add("hidden");
+    // document.getElementById("emptyCard").classList.remove("hidden");
+    if(id==="jobContainer" && jobs.length===0)
     {
-        container.classList.add("hidden");
-        emptyCard.classList.remove("hidden");
+        document.getElementById("emptyCard").classList.remove("hidden");
     }
-    else
+    else if(id==="interviewContainer" && interviewCards.length===0)
     {
-        container.classList.remove("hidden");
-        emptyCard.classList.add("hidden");
+        document.getElementById("emptyCard").classList.remove("hidden");
+    }
+    else if(id==="rejectedContainer" && rejectedCards.length===0)
+    {
+        document.getElementById("emptyCard").classList.remove("hidden");
+    }
+    else{
+        document.getElementById("emptyCard").classList.add("hidden");
     }
 }
 
+function updateEmptyCard() {
+    const jobContainer = document.getElementById("jobContainer");
+    const interviewContainer = document.getElementById("interviewContainer");
+    const rejectedContainer = document.getElementById("rejectedContainer");
+    const emptyCardEl = document.getElementById("emptyCard");
+
+    const visibleContainer = [jobContainer, interviewContainer, rejectedContainer].find(x => !x.classList.contains("hidden"));
+
+    if(!visibleContainer || (visibleContainer === jobContainer && jobs.length === 0) ||(visibleContainer === interviewContainer && interviewCards.length === 0) ||(visibleContainer === rejectedContainer && rejectedCards.length === 0))
+         {
+        emptyCardEl.classList.remove("hidden");
+    } 
+    else {
+        emptyCardEl.classList.add("hidden");
+    }
+}
+
+function updateJobNumber(filteredJobsLength)
+{
+    setInnerText("filterNumber", filteredJobsLength);
+}

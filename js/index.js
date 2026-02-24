@@ -22,20 +22,25 @@ else{
         document.getElementById("emptyCard").classList.add("hidden");
 
 for(let x of jobs)
-{
+{  
+    let color="#f7f8f8";
+    let status = "";
     if(x.jobStatus==="interview")
     {
         status = `<button class="btn btn-success text-amber-50 p-3 mt-5">INTERVIEW</button>`;
+        color="#DCFCE7";
     }
     else if(x.jobStatus==="rejected")
     {
         status = `<button class="btn btn-error text-amber-50 p-3 mt-5">REJECTED</button>`;
+        color="#FEE2E2";
     }
     else
     {
         status = `<button class="btn btn-soft btn-info text-gray-700 p-3 mt-5">NOT APPLIED</button>`;
+        color="#f7f8f8";
     }
-    let cards=`    <div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 ">
+    let cards=`    <div class="card bg-[#FFFFFF] p-5 rounded-lg py-6 border-l-4" style="border-left-color:${color}">
         <div class="card-heading flex items-center justify-between ">
             <div class="left">
                  <h3 class="font-semibold text-[18px]">${x.companyName}</h3>
@@ -43,7 +48,7 @@ for(let x of jobs)
             </div>
             <div class="right">
                <button class="border border-[#F1F2F4] rounded-full w-8 h-8 flex items-center justify-center">
-                <i class="fa-regular fa-trash-can text-[#64748B] cursor-pointer" onclick="deleteJob(${x.id})"></i>
+                <i class="fa-regular fa-trash-can text-[#64748B]" onclick="deleteJob(${x.id})"></i>
                </button>
             </div>
         </div>
