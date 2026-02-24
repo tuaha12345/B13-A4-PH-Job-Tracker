@@ -163,14 +163,23 @@ function allJobs(id)
    document.getElementById(id).classList.remove("hidden");
 
    if(id==="interviewContainer"){
+     document.getElementById("interview").style.backgroundColor = "#71B3F2";
+     document.getElementById("all").style.backgroundColor = "#FFFFFF";
+     document.getElementById("reject").style.backgroundColor = "#FFFFFF";
      document.getElementById("filterCount").classList.remove("hidden");
      updateJobNumber(interviewCards.length);
    }
    else if(id==="rejectedContainer"){
+        document.getElementById("reject").style.backgroundColor = "#71B3F2";
+     document.getElementById("all").style.backgroundColor = "#FFFFFF";
+     document.getElementById("interview").style.backgroundColor = "#FFFFFF";
     document.getElementById("filterCount").classList.remove("hidden");
      updateJobNumber(rejectedCards.length);
    }
    else{
+        document.getElementById("all").style.backgroundColor = "#71B3F2";
+     document.getElementById("interview").style.backgroundColor = "#FFFFFF";
+     document.getElementById("reject").style.backgroundColor = "#FFFFFF";
     document.getElementById("filterCount").classList.add("hidden");
    }
    
